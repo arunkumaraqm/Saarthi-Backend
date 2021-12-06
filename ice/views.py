@@ -57,20 +57,30 @@ def books(request):
 	# if request.method == 'GET':
 	# 	return HttpResponse('hello')
 
-@api_view(['PATCH', 'POST', 'DELETE'])
+# @api_view(['POST', 'PATCH'])
+# def get_num(request, *args, **kwargs):
+# 	if request.method == 'POST' or request.method == 'PATCH':
+# 		num = kwargs['num']
+# 		return HttpResponse(str(num))
+
+
+@api_view(['PATCH', 'POST', 'DELETE', 'GET'])
 def get_book_by_id(request, *args, **kwargs):
+
+	# if request.method == 'GET':
+		# return HttpResponse('hello')
 	if request.method == 'DELETE':
 		return delete_book_by_id(request, *args, **kwargs)
 
 	id = kwargs['id']
 	print(id)
 	mydict = {
-            'status_code': 200,
-			'status': 'success',
-			'data': [
+		'status_code': 200,
+		'status': 'success',
+		'data': [
 
-			]
-        }
+		]
+	}
 	bookqs = Book.objects.get(pk=id)
 	form = BookForm(request.POST or None, instance=bookqs)
 	if form.is_valid():
@@ -82,9 +92,14 @@ def get_book_by_id(request, *args, **kwargs):
 		}
 		mydict['data'].append(book)
 		return JsonResponse(mydict)
+	else: 
+		return HttpResponse('Invalid book information.')
 
+@api_view(['POST'])
+def remove_book_post(request, *args, **kwargs):
+	if request.method == 'POST':
+		return delete_book_by_id(request, *args, **kwargs)
 
-@api_view(['POST', 'DELETE'])
 def delete_book_by_id(request, *args, **kwargs):
 	id = kwargs['id']
 	print(id)
