@@ -56,3 +56,5 @@ Clone this repository on a bash terminal on PythonAnywhere, create a web app, ed
 # To Test
 
 Install Postman on your system and send requests to `http://localhost:8000/v1/...` (if you're running locally, else use PythonAnywhere URLs). The port number 8000 is the default port that the Django project runs on. 
+
+Please end your URLs with a slash otherwise there may be an error.
